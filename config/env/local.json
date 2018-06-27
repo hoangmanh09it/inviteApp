@@ -1,0 +1,9 @@
+{
+  "MYSQL_ADDRESS": "mysql",
+  "MYSQL_PORT": "3306",
+  "MYSQL_DB": "invite_app",
+  "MYSQL_USER" : "root",
+  "MYSQL_PASSWORD" : "password",
+  "SERVER_PORT" : 3000,
+  "SECRET_KEY" : "0a6b944d-d2fb-46fc-a85e-0295c986cd9f"
+}

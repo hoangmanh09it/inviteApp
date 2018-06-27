@@ -1,0 +1,3 @@
+libs/*
+coverage/
+**/dist/*
