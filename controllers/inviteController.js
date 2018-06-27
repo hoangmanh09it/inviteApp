@@ -10,10 +10,10 @@ const OFFSET = 0
  * @param {Object} res
  */
 const Index = (req, res) => {
-  let limit = req.query.limit && !isNaN(req.query.limit) ?
-    req.query.limit : LIMIT
-  let offset = req.query.offset && !isNaN(req.query.offset) ?
-    req.query.offset : OFFSET
+  let limit = req.query.limit && !isNaN(req.query.limit)
+    ? req.query.limit : LIMIT
+  let offset = req.query.offset && !isNaN(req.query.offset)
+    ? req.query.offset : OFFSET
   InviteToken.findAll({
     limit: limit,
     offset: offset
@@ -64,8 +64,8 @@ const Post = (req, res) => {
 
 /**
  * Get invite token detail
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
 const Show = (req, res) => {
   InviteToken.findById(req.params.tokenId)
@@ -77,7 +77,7 @@ const Show = (req, res) => {
           statusText: 'Invite token not foud',
           data: inviteToken
         })
-        return;
+        return
       }
       res.send({
         status: 200,
@@ -94,6 +94,40 @@ const Show = (req, res) => {
     })
 }
 
+/**
+ * Update invite token
+ * @param {Object} req
+ * @param {Object} res
+ */
+const Put = (req, res) => {
+  // let activeStatus = req.body.activeStatus ? req.body.activeStatus : true
+  InviteToken.findById(req.params.tokenId)
+    .then(inviteToken => {
+      if (!inviteToken) {
+        res.status(404)
+        res.send({
+          status: 404,
+          statusText: 'Invite token not foud',
+          data: inviteToken
+        })
+        return
+      }
+      return inviteToken.updateAttributes({
+        updatedAt: new Date()
+      })
+    }).then(updatedToken => {
+      console.log(updatedToken)
+      res.send(updatedToken)
+    })
+    .catch(err => {
+      res.status(500)
+      res.send({
+        status: 500,
+        statusText: 'Have an error in server',
+        err: err
+      })
+    })
+}
 /**
  * Generate expired date of invite code base on createdAt.
  * @param {Date} createdAt
@@ -113,5 +147,6 @@ const _generateExpiredDateFromCreatedAt = (createdAt) => {
 export default {
   Index,
   Post,
-  Show
+  Show,
+  Put
 }

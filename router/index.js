@@ -45,4 +45,11 @@ router.route('/invite-token').post(
 router.route('/invite-token/:tokenId').get(
   inviteToken.Show
 )
+// Update invite token
+router.route('/invite-token/:tokenId').put(
+  passport.authenticate('jwt', {
+    session: false
+  }),
+  inviteToken.Put
+)
 export default router
