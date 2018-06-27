@@ -10,10 +10,10 @@ const OFFSET = 0
  * @param {Object} res
  */
 const Index = (req, res) => {
-  let limit = req.query.limit && !isNaN(req.query.limit)
-    ? req.query.limit : LIMIT
-  let offset = req.query.offset && !isNaN(req.query.offset)
-    ? req.query.offset : OFFSET
+  let limit = req.query.limit && !isNaN(req.query.limit) ?
+    req.query.limit : LIMIT
+  let offset = req.query.offset && !isNaN(req.query.offset) ?
+    req.query.offset : OFFSET
   InviteToken.findAll({
     limit: limit,
     offset: offset
@@ -46,6 +46,7 @@ const Post = (req, res) => {
       status: 200,
       statusText: 'Sucessfull',
       data: {
+        id: invitetoken.id,
         code: invitetoken.code,
         expiredDate: _generateExpiredDateFromCreatedAt(
           invitetoken.createdAt
@@ -74,8 +75,7 @@ const Show = (req, res) => {
         res.status(404)
         res.send({
           status: 404,
-          statusText: 'Invite token not foud',
-          data: inviteToken
+          statusText: 'Invite token not foud'
         })
         return
       }
@@ -100,24 +100,32 @@ const Show = (req, res) => {
  * @param {Object} res
  */
 const Put = (req, res) => {
-  // let activeStatus = req.body.activeStatus ? req.body.activeStatus : true
-  InviteToken.findById(req.params.tokenId)
-    .then(inviteToken => {
-      if (!inviteToken) {
+  let activeStatus = req.body.active
+  let updatedCondition = {
+    updatedAt: new Date()
+  }
+  if (activeStatus && activeStatus == true || activeStatus == false) {
+    updatedCondition.active = activeStatus
+  }
+
+  InviteToken.update(updatedCondition, {
+      where: {
+        id: req.params.tokenId
+      }
+    })
+    .then((result) => {
+      if (result[0] == 0) {
         res.status(404)
         res.send({
           status: 404,
-          statusText: 'Invite token not foud',
-          data: inviteToken
+          statusText: 'Invite token not foud'
         })
         return
       }
-      return inviteToken.updateAttributes({
-        updatedAt: new Date()
+      res.send({
+        status: 200,
+        statusText: 'Update invite token sucessfull'
       })
-    }).then(updatedToken => {
-      console.log(updatedToken)
-      res.send(updatedToken)
     })
     .catch(err => {
       res.status(500)
