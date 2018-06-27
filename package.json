@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
     "lint": "node_modules/.bin/eslint ./ --fix",
-    "test": "mocha --timeout 300s --require test/init.js --compilers js:babel-core/register --colors --reporter spec --recursive test",
+    "test": "mocha  --timeout 300s --require test/init.js --compilers js:babel-core/register --colors --reporter spec --recursive test",
     "pretest-coverage": "rm -Rf coverage",
     "test-coverage": "nyc npm test",
     "pretest-require-corverall": "npm run test-coverage",

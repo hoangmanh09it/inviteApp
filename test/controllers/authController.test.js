@@ -47,8 +47,6 @@ describe('Auth Controller testing', function () {
       })
       authCtr.LOGIN(request, response)
     })
-
-
     it('Login faill with  username password are undifined', function (done) {
       let response = buildResponse()
       response.on('end', function () {
