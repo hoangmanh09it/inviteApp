@@ -1,9 +1,9 @@
 import authCtr from '../../controllers/authController'
 import httpMocks from 'node-mocks-http'
 import expect from 'expect.js'
-import { SSL_OP_NETSCAPE_CHALLENGE_BUG } from 'constants';
 
-function buildResponse() {
+
+const buildResponse = () => {
   return httpMocks.createResponse({
     eventEmitter: require('events').EventEmitter
   })

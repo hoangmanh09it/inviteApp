@@ -10,10 +10,10 @@ const OFFSET = 0
  * @param {Object} res
  */
 const Index = (req, res) => {
-  let limit = req.query.limit && !isNaN(req.query.limit) ?
-    req.query.limit : LIMIT
-  let offset = req.query.offset && !isNaN(req.query.offset) ?
-    req.query.offset : OFFSET
+  let limit = req.query.limit && !isNaN(req.query.limit)
+    ? req.query.limit : LIMIT
+  let offset = req.query.offset && !isNaN(req.query.offset)
+    ? req.query.offset : OFFSET
   InviteToken.findAll({
     limit: limit,
     offset: offset
@@ -109,10 +109,10 @@ const Put = (req, res) => {
   }
 
   InviteToken.update(updatedCondition, {
-      where: {
-        id: req.params.tokenId
-      }
-    })
+    where: {
+      id: req.params.tokenId
+    }
+  })
     .then((result) => {
       if (result[0] == 0) {
         res.status(404)

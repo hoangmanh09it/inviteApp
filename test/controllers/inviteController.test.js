@@ -3,7 +3,7 @@ import inviteTokenCtr from '../../controllers/inviteController'
 import httpMocks from 'node-mocks-http'
 import expect from 'expect.js'
 
-function buildResponse() {
+function buildResponse () {
   return httpMocks.createResponse({
     eventEmitter: require('events').EventEmitter
   })
@@ -11,7 +11,7 @@ function buildResponse() {
 
 describe('Invite token Controller testing', function () {
   describe('Testing invite token GET/POST/PUSH/INDEX method', () => {
-    var inviteTokenIdCreated = 0;
+    var inviteTokenIdCreated = 0
     // var accessToken = '';
     // before(() => {
     //   let response = buildResponse()
@@ -147,7 +147,6 @@ describe('Invite token Controller testing', function () {
       }
     )
 
-
     it('Testing update invite token (active invite token)',
       function (done) {
         let response = buildResponse()
@@ -170,7 +169,6 @@ describe('Invite token Controller testing', function () {
         inviteTokenCtr.Put(request, response)
       }
     )
-
 
     it('Testing update invite token do not available in database',
       function (done) {

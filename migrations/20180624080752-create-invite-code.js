@@ -14,8 +14,8 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      active : {
-        type: Sequelize.BOOLEAN 
+      active: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
