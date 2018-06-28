@@ -13,15 +13,25 @@ const LoginBody = {
   }
 }
 
+const LoginInviteTokenBody = {
+  body: {
+    code: Joi.string().required().strip()
+  }
+}
+
 /**
  * Auth routing
  */
 router.route('/auth/login').post(
   validate(LoginBody),
-  authCtr.LOGIN
+  authCtr.Login
 )
 router.route('/auth/logout').get(
-  authCtr.LOGOUT
+  authCtr.Logout
+)
+router.route('/auth/invite-token-login').post(
+  validate(LoginInviteTokenBody),
+  authCtr.LoginViaInviteToken
 )
 
 /**
@@ -29,16 +39,22 @@ router.route('/auth/logout').get(
  */
 // Get list invite token
 router.route('/invite-token').get(
-  passport.authenticate('jwt', {
-    session: false
-  }), inviteToken.Index
+  passport.authenticate(
+    'jwt', {
+      session: false
+    }
+  ),
+  inviteToken.Index
 )
 
 // generate invite token
 router.route('/invite-token').post(
-  passport.authenticate('jwt', {
-    session: false
-  }), inviteToken.Post
+  passport.authenticate(
+    'jwt', {
+      session: false
+    }
+  ),
+  inviteToken.Post
 )
 
 // get invite token detail
@@ -47,9 +63,11 @@ router.route('/invite-token/:tokenId').get(
 )
 // Update invite token
 router.route('/invite-token/:tokenId').put(
-  passport.authenticate('jwt', {
-    session: false
-  }),
+  passport.authenticate(
+    'jwt', {
+      session: false
+    }
+  ),
   inviteToken.Put
 )
 export default router

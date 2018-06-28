@@ -2,7 +2,6 @@ import authCtr from '../../controllers/authController'
 import httpMocks from 'node-mocks-http'
 import expect from 'expect.js'
 
-
 const buildResponse = () => {
   return httpMocks.createResponse({
     eventEmitter: require('events').EventEmitter
@@ -21,7 +20,7 @@ describe('Auth Controller testing', function () {
         },
         url: '/auth/login'
       })
-      authCtr.LOGIN(request, response)
+      authCtr.Login(request, response)
       response.on('end', () => {
         let data = response._getData()
         expect(data.status).to.be(200)
@@ -45,7 +44,7 @@ describe('Auth Controller testing', function () {
         },
         url: '/auth/login'
       })
-      authCtr.LOGIN(request, response)
+      authCtr.Login(request, response)
     })
     it('Login faill with  username password are undifined', function (done) {
       let response = buildResponse()
@@ -59,7 +58,7 @@ describe('Auth Controller testing', function () {
         method: 'POST',
         url: '/auth/login'
       })
-      authCtr.LOGIN(request, response)
+      authCtr.Login(request, response)
     })
   })
 })

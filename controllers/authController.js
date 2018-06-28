@@ -1,16 +1,16 @@
 import {
-  User
+  User,
+  InviteToken
 } from '../models'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 
 /**
- *  The API Login
- * @param  {string} '/login' the name url for api login
- * @param  {object} function(req, res)
+ * Login via username, password
+ * @param {Object} req
+ * @param {Object} res
  */
-
-const LOGIN = (req, res) => {
+const Login = (req, res) => {
   try {
     User.findOne({
       where: {
@@ -51,11 +51,65 @@ const LOGIN = (req, res) => {
   }
 }
 
-const LOGOUT = (req, res) => {
+const Logout = (req, res) => {
 
 }
 
+/**
+ * Login via invite token
+ * @param {Object} req
+ * @param {Object} res
+ */
+const LoginViaInviteToken = (req, res) => {
+  try {
+    let inviteCode = req.body.code
+    InviteToken.findOne({
+      where: {
+        code: inviteCode
+
+      }
+    }).then(inviteObject => {
+      if (!inviteObject) {
+        res.status(401)
+        res.send({
+          status: 401,
+          statusText: 'Invite token invalid'
+        })
+        return
+      }
+      let responseData = {
+        id: inviteObject.id,
+        type: 'invite',
+        code: inviteObject.code,
+        loginAt: new Date().getTime()
+      }
+      responseData.token = jwt.sign(responseData, process.env.SECRET_KEY)
+      res.send({
+        status: 200,
+        statusText: 'Login sucess',
+        data: responseData
+      })
+    }).catch(err => {
+      res.status(500)
+      res.send({
+        status: 500,
+        statusText: 'Have an error in server',
+        err: err
+      })
+    })
+  } catch (error) {
+    console.logog(error)
+    res.status(500)
+    res.send({
+      status: 500,
+      statusText: 'Have an error in server',
+      err: error
+    })
+  }
+}
+
 export default {
-  LOGIN,
-  LOGOUT
+  Login,
+  Logout,
+  LoginViaInviteToken
 }

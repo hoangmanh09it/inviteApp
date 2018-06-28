@@ -10,10 +10,10 @@ const OFFSET = 0
  * @param {Object} res
  */
 const Index = (req, res) => {
-  let limit = req.query.limit && !isNaN(req.query.limit)
-    ? req.query.limit : LIMIT
-  let offset = req.query.offset && !isNaN(req.query.offset)
-    ? req.query.offset : OFFSET
+  let limit = req.query.limit && !isNaN(req.query.limit) ?
+    req.query.limit : LIMIT
+  let offset = req.query.offset && !isNaN(req.query.offset) ?
+    req.query.offset : OFFSET
   InviteToken.findAll({
     limit: limit,
     offset: offset
@@ -69,7 +69,12 @@ const Post = (req, res) => {
  * @param {Object} res
  */
 const Show = (req, res) => {
-  InviteToken.findById(req.params.tokenId)
+  InviteToken.findOne({
+      where: {
+        id: req.params.tokenId,
+        active: true
+      }
+    })
     .then(inviteToken => {
       if (!inviteToken) {
         res.status(404)
@@ -101,40 +106,68 @@ const Show = (req, res) => {
  */
 const Put = (req, res) => {
   let activeStatus = req.body.active
-  let updatedCondition = {
-    updatedAt: new Date()
-  }
-  if (activeStatus && activeStatus == true || activeStatus == false) {
-    updatedCondition.active = activeStatus
-  }
-
-  InviteToken.update(updatedCondition, {
-    where: {
-      id: req.params.tokenId
-    }
-  })
-    .then((result) => {
-      if (result[0] == 0) {
+  InviteToken.findOne({
+      where: {
+        id: req.params.tokenId
+      }
+    })
+    .then(inviteToken => {
+      if (!inviteToken) {
         res.status(404)
-        res.send({
+        return res.send({
           status: 404,
           statusText: 'Invite token not foud'
         })
-        return
+
       }
-      res.send({
+      inviteToken.updatedAt = new Date()
+      if (activeStatus !== undefined && (activeStatus === true || activeStatus == false)) {
+        inviteToken.active = activeStatus;
+      }
+      return inviteToken.save()
+    }).then(updatedToken => {
+      return res.send({
         status: 200,
-        statusText: 'Update invite token sucessfull'
+        statusText: 'Sucessfull',
+        data: updatedToken
       })
     })
     .catch(err => {
       res.status(500)
-      res.send({
+      return res.send({
         status: 500,
         statusText: 'Have an error in server',
         err: err
       })
     })
+
+  // InviteToken.update(updatedCondition, {
+  //     where: {
+  //       id: req.params.tokenId
+  //     }
+  //   })
+  //   .then((result) => {
+  //     if (result[0] === 0) {
+  //       res.status(404)
+  //       res.send({
+  //         status: 404,
+  //         statusText: 'Invite token not foud'
+  //       })
+  //       return
+  //     }
+  //     res.send({
+  //       status: 200,
+  //       statusText: 'Update invite token sucessfull'
+  //     })
+  //   })
+  //   .catch(err => {
+  //     res.status(500)
+  //     res.send({
+  //       status: 500,
+  //       statusText: 'Have an error in server',
+  //       err: err
+  //     })
+  //   })
 }
 /**
  * Generate expired date of invite code base on createdAt.

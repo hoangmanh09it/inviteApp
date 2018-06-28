@@ -24,6 +24,18 @@ for (let key of keys) {
 
 const app = express()
 const server = require('http').createServer(app)
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // intercept OPTIONS method
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  } else {
+    next()
+  }
+});
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json())

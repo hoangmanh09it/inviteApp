@@ -1,9 +1,8 @@
-import authCtr from '../../controllers/authController'
 import inviteTokenCtr from '../../controllers/inviteController'
 import httpMocks from 'node-mocks-http'
 import expect from 'expect.js'
 
-function buildResponse () {
+function buildResponse() {
   return httpMocks.createResponse({
     eventEmitter: require('events').EventEmitter
   })
@@ -12,25 +11,6 @@ function buildResponse () {
 describe('Invite token Controller testing', function () {
   describe('Testing invite token GET/POST/PUSH/INDEX method', () => {
     var inviteTokenIdCreated = 0
-    // var accessToken = '';
-    // before(() => {
-    //   let response = buildResponse()
-    //   let request = httpMocks.createRequest({
-    //     method: 'POST',
-    //     body: {
-    //       username: 'admin',
-    //       password: 'password'
-    //     },
-    //     url: '/auth/login'
-    //   })
-    //   authCtr.LOGIN(request, response)
-    //   response.on('end', () => {
-    //     let data = response._getData()
-    //     accessToken = data.data.token
-    //     done()
-    //   })
-    // });
-
     it('Test generate invite token', function (done) {
       let response = buildResponse()
       let request = httpMocks.createRequest({
