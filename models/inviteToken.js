@@ -1,5 +1,5 @@
 'use strict'
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   var InviteToken = sequelize.define('invite_token', {
     code: DataTypes.STRING,
     description: DataTypes.STRING,
@@ -7,9 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     }
-  }, {})
-  InviteToken.associate = function (models) {
-    // associations can be defined here
-  }
+  })
+
   return InviteToken
 }

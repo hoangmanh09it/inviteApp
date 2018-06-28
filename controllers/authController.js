@@ -1,7 +1,4 @@
-import {
-  User,
-  InviteToken
-} from '../models'
+import { User, InviteToken } from '../models'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 
@@ -15,7 +12,9 @@ const Login = (req, res) => {
     User.findOne({
       where: {
         username: req.body.username,
-        password: crypto.createHash('sha1').update(req.body.password).digest('hex')
+        password: crypto.createHash('sha1')
+          .update(req.body.password)
+          .digest('hex')
       }
     }).then(user => {
       if (!user) {
@@ -32,7 +31,9 @@ const Login = (req, res) => {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       }
-      responseData.token = jwt.sign(responseData, process.env.SECRET_KEY)
+      responseData.token = jwt.sign(
+        responseData, process.env.SECRET_KEY
+      )
       res.send({
         status: 200,
         statusText: 'Login sucess',
@@ -42,6 +43,7 @@ const Login = (req, res) => {
       res.send(err)
     ))
   } catch (error) {
+    console.log(error)
     res.status(500)
     res.send({
       status: 500,
@@ -52,7 +54,6 @@ const Login = (req, res) => {
 }
 
 const Logout = (req, res) => {
-
 }
 
 /**
@@ -66,7 +67,6 @@ const LoginViaInviteToken = (req, res) => {
     InviteToken.findOne({
       where: {
         code: inviteCode
-
       }
     }).then(inviteObject => {
       if (!inviteObject) {
@@ -83,7 +83,9 @@ const LoginViaInviteToken = (req, res) => {
         code: inviteObject.code,
         loginAt: new Date().getTime()
       }
-      responseData.token = jwt.sign(responseData, process.env.SECRET_KEY)
+      responseData.token = jwt.sign(
+        responseData, process.env.SECRET_KEY
+      )
       res.send({
         status: 200,
         statusText: 'Login sucess',
@@ -98,7 +100,6 @@ const LoginViaInviteToken = (req, res) => {
       })
     })
   } catch (error) {
-    console.logog(error)
     res.status(500)
     res.send({
       status: 500,

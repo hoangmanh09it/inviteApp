@@ -9,12 +9,6 @@ import passport from 'passport'
 import passConfig from './passport-config'
 import router from '../router'
 
-// load controller
-// import {
-//   LOGIN
-// } from '../controllers/authController'
-// import inviteCtrl from '../controllers/inviteController'
-
 const env = process.env.APP_ENV || 'local'
 const config = require(`./env/${env}.json`)
 const keys = Object.keys(config)
@@ -25,17 +19,16 @@ for (let key of keys) {
 const app = express()
 const server = require('http').createServer(app)
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
-    res.send(200);
+  if (req.method === 'OPTIONS') {
+    res.send(200)
   } else {
     next()
   }
-});
+})
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json())
@@ -56,15 +49,20 @@ app.use(helmet())
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors())
 
+// routing
 app.use('/api', router)
 
+// Handle error
 app.use((err, req, res, next) => {
-  console.log(err)
-  res.status(400).json(err)
+  res.status(500).json(err)
 })
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  console.log('not foud')
+  res.status(404)
+  res.send({
+    status: 404,
+    statusText: 'Api not found'
+  })
 })
 
 export default server

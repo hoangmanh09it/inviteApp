@@ -2,7 +2,7 @@ import inviteTokenCtr from '../../controllers/inviteController'
 import httpMocks from 'node-mocks-http'
 import expect from 'expect.js'
 
-function buildResponse() {
+function buildResponse () {
   return httpMocks.createResponse({
     eventEmitter: require('events').EventEmitter
   })

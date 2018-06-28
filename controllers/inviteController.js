@@ -1,6 +1,4 @@
-import {
-  InviteToken
-} from '../models'
+import { InviteToken } from '../models'
 const LIMIT = 10
 const OFFSET = 0
 
@@ -10,11 +8,14 @@ const OFFSET = 0
  * @param {Object} res
  */
 const Index = (req, res) => {
-  let limit = req.query.limit && !isNaN(req.query.limit) ?
-    req.query.limit : LIMIT
-  let offset = req.query.offset && !isNaN(req.query.offset) ?
-    req.query.offset : OFFSET
+  let limit = req.query.limit && !isNaN(req.query.limit)
+    ? req.query.limit : LIMIT
+  let offset = req.query.offset && !isNaN(req.query.offset)
+    ? req.query.offset : OFFSET
   InviteToken.findAll({
+    order: [
+      ['id', 'DESC']
+    ],
     limit: limit,
     offset: offset
 
@@ -48,6 +49,9 @@ const Post = (req, res) => {
       data: {
         id: invitetoken.id,
         code: invitetoken.code,
+        createdAt: invitetoken.createdAt,
+        updatedAt: invitetoken.updatedAt,
+        active: invitetoken.active,
         expiredDate: _generateExpiredDateFromCreatedAt(
           invitetoken.createdAt
         )
@@ -70,11 +74,11 @@ const Post = (req, res) => {
  */
 const Show = (req, res) => {
   InviteToken.findOne({
-      where: {
-        id: req.params.tokenId,
-        active: true
-      }
-    })
+    where: {
+      id: req.params.tokenId,
+      active: true
+    }
+  })
     .then(inviteToken => {
       if (!inviteToken) {
         res.status(404)
@@ -107,10 +111,10 @@ const Show = (req, res) => {
 const Put = (req, res) => {
   let activeStatus = req.body.active
   InviteToken.findOne({
-      where: {
-        id: req.params.tokenId
-      }
-    })
+    where: {
+      id: req.params.tokenId
+    }
+  })
     .then(inviteToken => {
       if (!inviteToken) {
         res.status(404)
@@ -118,11 +122,10 @@ const Put = (req, res) => {
           status: 404,
           statusText: 'Invite token not foud'
         })
-
       }
       inviteToken.updatedAt = new Date()
-      if (activeStatus !== undefined && (activeStatus === true || activeStatus == false)) {
-        inviteToken.active = activeStatus;
+      if (activeStatus !== undefined && (activeStatus === true || activeStatus === false)) {
+        inviteToken.active = activeStatus
       }
       return inviteToken.save()
     }).then(updatedToken => {
@@ -140,34 +143,6 @@ const Put = (req, res) => {
         err: err
       })
     })
-
-  // InviteToken.update(updatedCondition, {
-  //     where: {
-  //       id: req.params.tokenId
-  //     }
-  //   })
-  //   .then((result) => {
-  //     if (result[0] === 0) {
-  //       res.status(404)
-  //       res.send({
-  //         status: 404,
-  //         statusText: 'Invite token not foud'
-  //       })
-  //       return
-  //     }
-  //     res.send({
-  //       status: 200,
-  //       statusText: 'Update invite token sucessfull'
-  //     })
-  //   })
-  //   .catch(err => {
-  //     res.status(500)
-  //     res.send({
-  //       status: 500,
-  //       statusText: 'Have an error in server',
-  //       err: err
-  //     })
-  //   })
 }
 /**
  * Generate expired date of invite code base on createdAt.
