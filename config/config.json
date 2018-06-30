@@ -3,21 +3,25 @@
     "username": "root",
     "password": "password",
     "database": "invite_app",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "host": "localhost",
+    "dialect": "mysql",
+    "SERVER_PORT" : 3000,
+    "SECRET_KEY" : "0a6b944d-d2fb-46fc-a85e-0295c986cd9f"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "password": "password",
+    "database": "invite_app",
+    "host": "localhost",
+    "dialect": "mysql",
+    "SERVER_PORT" : 3000,
+    "SECRET_KEY" : "0a6b944d-d2fb-46fc-a85e-0295c986cd9f"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_test",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }

@@ -2,8 +2,8 @@ import Sequelize from 'sequelize'
 import UserModel from './user'
 import InviteTokenModel from './inviteToken'
 
-const sequelize = new Sequelize('invite_app', 'root', 'password', {
-  host: 'localhost',
+const sequelize = new Sequelize(process.env.database, process.env.username,  process.env.password, {
+  host: process.env.host,
   dialect: 'mysql',
   operatorsAliases: false,
   pool: {

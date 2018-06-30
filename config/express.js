@@ -9,13 +9,13 @@ import passport from 'passport'
 import passConfig from './passport-config'
 import router from '../router'
 
-const env = process.env.APP_ENV || 'local'
-const config = require(`./env/${env}.json`)
-const keys = Object.keys(config)
+const env = process.env.APP_ENV || 'development'
+const config = require('./config.json')
+const configData = config[env]
+const keys = Object.keys(configData);
 for (let key of keys) {
-  process.env[key] = config[key]
+  process.env[key] = configData[key]
 }
-
 const app = express()
 const server = require('http').createServer(app)
 app.use(function (req, res, next) {
