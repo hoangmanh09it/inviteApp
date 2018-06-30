@@ -16,6 +16,7 @@ const keys = Object.keys(configData);
 for (let key of keys) {
   process.env[key] = configData[key]
 }
+
 const app = express()
 const server = require('http').createServer(app)
 app.use(function (req, res, next) {
