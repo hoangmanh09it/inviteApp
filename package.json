@@ -12,8 +12,9 @@
     "pretest-require-corverall": "npm run test-coverage",
     "test-require-corverall": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "predeploy": "npm test",
-    "migrate": "babel-node bin/migrate.js",
-    "rollback-migrate": "babel-node bin/migrate.js down"
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "seed" : "node_modules/.bin/sequelize db:seed:all",
+    "rollback-migrate": "node_modules/.bin/sequelize db:migrate:undo:all"
   },
   "nyc": {
     "reporter": [
