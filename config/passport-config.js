@@ -3,6 +3,10 @@ import passportJWT from 'passport-jwt'
 const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 
+/**
+ * Using passort auth at middleware
+ * @param {Object} passport
+ */
 const passConfig = (passport) => {
   passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),

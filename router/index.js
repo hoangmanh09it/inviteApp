@@ -4,8 +4,12 @@ import express from 'express'
 import validate from 'express-validation'
 import authCtr from '../controllers/authController'
 import inviteToken from '../controllers/inviteController'
+
 const router = express.Router()
 
+/**
+ * required parameter in auth/login API
+ */
 const LoginBody = {
   body: {
     username: Joi.string().required().strip(),
@@ -13,6 +17,9 @@ const LoginBody = {
   }
 }
 
+/**
+ * Required value in login via invite token
+ */
 const LoginInviteTokenBody = {
   body: {
     code: Joi.string().required().strip()
@@ -37,7 +44,6 @@ router.route('/auth/invite-token-login').post(
 /**
  * Invite token resouce routing
  */
-// Get list invite token
 router.route('/invite-token').get(
   passport.authenticate(
     'jwt', {
@@ -47,7 +53,9 @@ router.route('/invite-token').get(
   inviteToken.Index
 )
 
-// generate invite token
+/**
+ * generate invite token
+ */
 router.route('/invite-token').post(
   passport.authenticate(
     'jwt', {
@@ -57,11 +65,16 @@ router.route('/invite-token').post(
   inviteToken.Post
 )
 
-// get invite token detail
+/**
+ * get invite token detail
+ */
 router.route('/invite-token/:tokenId').get(
   inviteToken.Show
 )
-// Update invite token
+
+/**
+ * Update invite token
+ */
 router.route('/invite-token/:tokenId').put(
   passport.authenticate(
     'jwt', {
@@ -70,4 +83,5 @@ router.route('/invite-token/:tokenId').put(
   ),
   inviteToken.Put
 )
+
 export default router

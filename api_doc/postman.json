@@ -1,0 +1,168 @@
+{
+	"id": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+	"name": "Invite_app",
+	"description": "",
+	"order": [
+		"8f4bf918-601a-e58b-14e0-b0d12f8176e1",
+		"9597ab35-dd20-4807-5af5-97b048ff79c1",
+		"3fb739aa-585a-a45f-9701-8bd145e592e9",
+		"f495f7c8-b7e1-490e-250b-deade3fcae2f",
+		"fe81b93a-423b-25f5-d4b4-b9f696a8dd25",
+		"4a74002f-9390-131e-3d90-050b7e12242d"
+	],
+	"folders_order": [],
+	"folders": [],
+	"owner": 0,
+	"hasRequests": true,
+	"requests": [
+		{
+			"id": "3fb739aa-585a-a45f-9701-8bd145e592e9",
+			"name": "Get list invite token",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"method": "GET",
+			"headers": "Authorization: {{token}}",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{url}}/api/invite-token",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": ""
+				}
+			],
+			"collection_id": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446"
+		},
+		{
+			"id": "4a74002f-9390-131e-3d90-050b7e12242d",
+			"headers": "Authorization: {{token}}\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/api/invite-token/1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1530411589516,
+			"name": "Update invite token",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"responses": [],
+			"rawModeData": "{\n\t\"active\" : true \n}"
+		},
+		{
+			"id": "8f4bf918-601a-e58b-14e0-b0d12f8176e1",
+			"name": "Login",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"method": "POST",
+			"headers": "Content-Type: application/json",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "{ \n\t\"username\" : \"admin\",\n\t\"password\" : \"password\"\n}",
+			"tests": "var jsonData = JSON.parse(responseBody);\nif(jsonData.data.token) {\n    postman.setEnvironmentVariable(\"token\", 'Bearer ' + jsonData.data.token);\n}",
+			"preRequestScript": "",
+			"url": "{{url}}/api/auth/login",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": ""
+				}
+			],
+			"collection_id": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446"
+		},
+		{
+			"id": "9597ab35-dd20-4807-5af5-97b048ff79c1",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/api/auth/invite-token-login",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1530411480854,
+			"name": "Login via invite token",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"responses": [],
+			"rawModeData": "{ \n\t\"code\" : \"nrp1fue6i8n\"\n}"
+		},
+		{
+			"id": "f495f7c8-b7e1-490e-250b-deade3fcae2f",
+			"name": "Get invite token detail",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"method": "GET",
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{url}}/api/invite-token/1",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446"
+		},
+		{
+			"id": "fe81b93a-423b-25f5-d4b4-b9f696a8dd25",
+			"name": "Generate invite token",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"method": "POST",
+			"headers": "Authorization: {{token}}",
+			"data": [],
+			"rawModeData": "",
+			"url": "{{url}}/api/invite-token",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": ""
+				}
+			],
+			"collection_id": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446"
+		}
+	]
+}
