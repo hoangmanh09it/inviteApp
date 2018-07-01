@@ -74,28 +74,32 @@
 		},
 		{
 			"id": "8f4bf918-601a-e58b-14e0-b0d12f8176e1",
-			"name": "Login",
-			"description": "",
-			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
-			"method": "POST",
-			"headers": "Content-Type: application/json",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{ \n\t\"username\" : \"admin\",\n\t\"password\" : \"password\"\n}",
-			"tests": "var jsonData = JSON.parse(responseBody);\nif(jsonData.data.token) {\n    postman.setEnvironmentVariable(\"token\", 'Bearer ' + jsonData.data.token);\n}",
-			"preRequestScript": "",
-			"url": "{{url}}/api/auth/login",
-			"responses": [],
-			"pathVariableData": [],
-			"queryParams": [],
+			"headers": "Content-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
 					"value": "application/json",
-					"description": ""
+					"description": "",
+					"enabled": true
 				}
 			],
-			"collection_id": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446"
+			"url": "{{url}}/api/auth/login",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\nif(jsonData.data.token) {\n    postman.setEnvironmentVariable(\"token\",  jsonData.data.token);\n}",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1530431233973,
+			"name": "Login",
+			"description": "",
+			"collectionId": "a9aacaaa-023d-81a2-49c2-5fce7b1cd446",
+			"responses": [],
+			"rawModeData": "{ \n\t\"username\" : \"admin\",\n\t\"password\" : \"password\"\n}"
 		},
 		{
 			"id": "9597ab35-dd20-4807-5af5-97b048ff79c1",

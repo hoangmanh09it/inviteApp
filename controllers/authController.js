@@ -31,9 +31,7 @@ const Login = (req, res) => {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       }
-      responseData.token = jwt.sign(
-        responseData, process.env.SECRET_KEY
-      )
+      responseData.token = _generateUserToken(responseData)
       res.send({
         status: 200,
         statusText: 'Login sucess',
@@ -83,9 +81,7 @@ const LoginViaInviteToken = (req, res) => {
         code: inviteObject.code,
         loginAt: new Date().getTime()
       }
-      responseData.token = jwt.sign(
-        responseData, process.env.SECRET_KEY
-      )
+      responseData.token = _generateUserToken(responseData)
       res.send({
         status: 200,
         statusText: 'Login sucess',
@@ -107,6 +103,16 @@ const LoginViaInviteToken = (req, res) => {
       err: error
     })
   }
+}
+
+/**
+ * Generate User JWT
+ */
+const _generateUserToken = (userObjet) => {
+  let token = jwt.sign(
+    userObjet, process.env.SECRET_KEY
+  )
+  return 'Bearer ' + token
 }
 
 export default {
